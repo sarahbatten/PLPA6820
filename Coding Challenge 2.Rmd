@@ -1,0 +1,119 @@
+---
+title: "Coding Challenge 2"
+output: html_document
+date: "2025-02-13"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Our group members are Sarah Batten, Alexandra Neff, Katie Clouse
+
+## Question 1 - Explain the following things about ggplot
+a. The three elements needed to produce a ggplot are the dataset itself, the coordinate system, and the layers to the plots - the geom_(). The dataset will be what is displayed in the plot, the aesthetic mappings says what the plot coordinates, and the geom_() indicates what type of plot to do and many other possible features for the plot. 
+
+b. A geom is a layer to the plot. They are called separately to the plot and add different features to the plot, and ggplot has many differnt geom() options to choose from. 
+
+c. A facet is when there is a separate plot for subplots of data. It is accessed using facet_wrap(). 
+
+d. Layering is the order that the geom arguments is applied to the plot. For example, geom_point() can be added before geom_smooth(method = lm, se = FALSE) and the points will be behind the line. If the order they are called is switched, the points will be on top of the line. This lets the data be visualized in a manner that is easier for analyis. 
+
+e. In the aes() function. 
+
+## Question 2 - Making boxplots
+
+```{r}
+data <- read.csv("MycotoxinData.csv", na.strings = "na")
+library(ggplot2)
+ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
+  geom_boxplot()+
+  xlab("")+
+  ylab("ppm")
+```
+## Question 3 - Making bar chart
+```{r}
+ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  xlab("")+
+  ylab("ppm")
+```
+
+## Question 4 
+Add points to the foreground of the boxplot and bar chart you made in question 3
+that show the distribution of points over the boxplots. Set the shape = 21 and the outline
+color black (hint: use jitter_dodge).
+
+```{r}
+ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  xlab("")+
+  ylab("ppm")+
+  geom_point(position = position_jitterdodge(dodge.width = 0.9), aes(fill = Cultivar), shape = 21, color = "black")
+
+```
+
+## Question 5
+hange the fill color of the points and boxplots to match some colors in the
+following colorblind pallet.
+
+```{r}
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
+"#0072B2", "#D55E00", "#CC79A7")
+
+ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  xlab("")+
+  ylab("ppm")+
+  geom_point(position = position_jitterdodge(dodge.width = 0.9), aes(fill = Cultivar), shape = 21, color = "black")+
+  scale_color_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+ 
+  scale_fill_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))
+  
+```
+
+## Question 6
+
+```{r}
+ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  xlab("")+
+  ylab("ppm")+
+  geom_point(position = position_jitterdodge(dodge.width = 0.9), aes(fill = Cultivar), shape = 21, color = "black")+
+  scale_color_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+ 
+  scale_fill_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+
+  facet_wrap(~Cultivar)
+```
+
+## Question 7
+
+```{r}
+ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  xlab("")+
+  ylab("ppm")+
+  geom_point(position = position_jitterdodge(dodge.width = 0.9), aes(fill = Cultivar), shape = 21, color = "black")+
+  geom_jitter(width = 0.5, alpha = 0.5)+
+  scale_color_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+ 
+  scale_fill_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+
+  facet_wrap(~Cultivar)
+```
+
+## Question 8
+Another plot we could use is a violin plot. This is a similar concept to box plots, but it also shows the density of the distribution of the data. 
+
+```{r}
+ggplot(data = data, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  geom_violin(position = position_dodge(width = 0.9), alpha = 0.6) +  # Violin plot with dodge for separation
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2), 
+             aes(fill = Cultivar), shape = 21, color = "black") +  # Add individual points
+  xlab("") +
+  ylab("ppm") +
+  scale_fill_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))
+```
+
+## Question 9 - Forking repository
+
