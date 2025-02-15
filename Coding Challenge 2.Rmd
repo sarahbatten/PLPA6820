@@ -23,18 +23,18 @@ e. In the aes() function.
 ## Question 2 - Making boxplots
 
 ```{r}
-data <- read.csv("MycotoxinData.csv", na.strings = "na")
-library(ggplot2)
-ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
-  geom_boxplot()+
-  xlab("")+
-  ylab("ppm")
+data <- read.csv("MycotoxinData.csv", na.strings = "na") # reading in the data, specifying to not include the na values
+library(ggplot2) # loading ggplot
+ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+ # state what data to use and what the axes are, use the Cultivar variable to assign colors
+  geom_boxplot()+ # indicates plot should be boxplot
+  xlab("")+ # no label for x axis
+  ylab("ppm") # y axis label is ppm
 ```
 ## Question 3 - Making bar chart
 ```{r}
 ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
-  stat_summary(fun = mean, geom = "bar", position = "dodge") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  stat_summary(fun = mean, geom = "bar", position = "dodge") + # make bar plot with the mean shown and the bars not overlapping 
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+ # shows standard error without overlapping
   xlab("")+
   ylab("ppm")
 ```
@@ -50,7 +50,7 @@ ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
   stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
   xlab("")+
   ylab("ppm")+
-  geom_point(position = position_jitterdodge(dodge.width = 0.9), aes(fill = Cultivar), shape = 21, color = "black")
+  geom_point(position = position_jitterdodge(dodge.width = 0.9), aes(fill = Cultivar), shape = 21, color = "black") # adds the data points to the blot, placed in front of the dodged boxplots
 
 ```
 
@@ -60,7 +60,7 @@ following colorblind pallet.
 
 ```{r}
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
-"#0072B2", "#D55E00", "#CC79A7")
+"#0072B2", "#D55E00", "#CC79A7") # created vector for colorblind colors, ended up not using
 
 ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
   stat_summary(fun = mean, geom = "bar", position = "dodge") +
@@ -69,7 +69,7 @@ ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
   ylab("ppm")+
   geom_point(position = position_jitterdodge(dodge.width = 0.9), aes(fill = Cultivar), shape = 21, color = "black")+
   scale_color_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+ 
-  scale_fill_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))
+  scale_fill_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442")) # makes the points and SE bars the colors selected from the palatte
   
 ```
 
@@ -84,7 +84,7 @@ ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
   geom_point(position = position_jitterdodge(dodge.width = 0.9), aes(fill = Cultivar), shape = 21, color = "black")+
   scale_color_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+ 
   scale_fill_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+
-  facet_wrap(~Cultivar)
+  facet_wrap(~Cultivar) # separates the different wheat varities
 ```
 
 ## Question 7
@@ -96,7 +96,7 @@ ggplot(data = data, aes(x = Treatment, y = DON, color = Cultivar))+
   xlab("")+
   ylab("ppm")+
   geom_point(position = position_jitterdodge(dodge.width = 0.9), aes(fill = Cultivar), shape = 21, color = "black")+
-  geom_jitter(width = 0.5, alpha = 0.5)+
+  geom_jitter(width = 0.5, alpha = 0.5)+ # adds transparency (how much is dictated by alpha) to the points
   scale_color_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+ 
   scale_fill_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))+
   facet_wrap(~Cultivar)
@@ -107,9 +107,9 @@ Another plot we could use is a violin plot. This is a similar concept to box plo
 
 ```{r}
 ggplot(data = data, aes(x = Treatment, y = DON, fill = Cultivar)) +
-  geom_violin(position = position_dodge(width = 0.9), alpha = 0.6) +  # Violin plot with dodge for separation
+  geom_violin(position = position_dodge(width = 0.9), alpha = 0.6) +  # violin plot with dodge for separation
   geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2), 
-             aes(fill = Cultivar), shape = 21, color = "black") +  # Add individual points
+             aes(fill = Cultivar), shape = 21, color = "black") +  # add individual points
   xlab("") +
   ylab("ppm") +
   scale_fill_manual(values = c("Ambassador" = "#56B4E9", "Wheaton" = "#F0E442"))
