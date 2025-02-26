@@ -1,30 +1,35 @@
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax
-for authoring HTML, PDF, and MS Word documents. For more details on
-using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that
-includes both content as well as the output of any embedded R code
-chunks within the document. You can embed an R code chunk like this:
+This is an example of an R code chunk.
 
 ``` r
-summary(cars)
+library(knitr)
+library(ggplot2)
+library(markdown)
+
+data("mtcars")
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_smooth(method = lm, se = FALSE) +
+  geom_point(aes(color = wt)) +
+  xlab("Weight") + 
+  ylab("Miles per gallon") +
+  scale_colour_gradient(low = "forestgreen", high = "black") + 
+  geom_smooth()
 ```
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+    ## `geom_smooth()` using formula = 'y ~ x'
+    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-## Including Plots
+![](Coding-notes-markdown_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-You can also embed plots, for example:
+R markdown formatting options
 
-![](Coding-notes-markdown_files/figure-gfm/pressure-1.png)<!-- -->
+# First level header
 
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+## Second level header
+
+### Third level header
+
+`*italic*` `_italic_` `**bold**` `__bold__`
+
+Blockquotes: \> “I thoroughly disapprove of duels. If a man should
+challenge me, I would take him kindly and forgivingly by the hand and
+lead him to a quiet place and kill him.” \> \> — Mark Twain
