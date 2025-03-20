@@ -75,4 +75,4 @@ alpha_average2 %>%
 
 ### Question 7
 Link to GitHub: 
-[Coding Challenge 5 Directory](https://github.com/sarahbatten/PLPA6820/Coding_Challenge_5)
+[Coding Challenge 5 Directory](https://github.com/sarahbatten/PLPA6820/tree/main)
