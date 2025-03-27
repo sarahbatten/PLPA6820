@@ -3,13 +3,13 @@ title: "Coding Challenge 6"
 author: "Sarah Batten"
 date: "2025-03-27"
 output: 
-  md_document:
-    variant: gfm
+  pdf_document:
   html_document:
     toc: true
     toc_float: true
   word_document:
-  pdf_document:
+  md_document:
+    variant: gfm
 ---
 
 ```{r setup, include=FALSE}
@@ -90,3 +90,6 @@ for (i in 1:nrow(cities)){
 print(dist_all) # printing
 ```
 
+
+Link to GitHub: 
+[Coding Challenge 6 Directory](https://github.com/sarahbatten/PLPA6820/tree/main)
