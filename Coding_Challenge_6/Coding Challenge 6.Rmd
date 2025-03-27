@@ -1,0 +1,92 @@
+---
+title: "Coding Challenge 6"
+author: "Sarah Batten"
+date: "2025-03-27"
+output: 
+  md_document:
+    variant: gfm
+  html_document:
+    toc: true
+    toc_float: true
+  word_document:
+  pdf_document:
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+The main purpose of writing your own functions and iterations is to make your analysis more reproducible and less prone to copy and pasting errors. When multiple code chunks are being copied and pasted with variables being switched around, it makes the script very likely to be wrong by mistake. It also simplifies your code.
+
+## Question 2
+A function is written by having the function name, followed by the command function then the variables that are required followed by a curly bracket. The code for the funtion is then underneath this with the desired output being listed at the end with the return function, ending with the second curly bracket:
+
+function_name <- function(variable){
+      code for function, using variable
+      return(desired_output)
+}
+This function can then be called using its name, and will apply the code to the variable given, then return the desired_output.
+
+The for loop runs the code within the loop for iterator, called i, from the start condition to the end conditions that are specified in the loop setup. Curly brackets are used before and after the code that the variable/iterator will be applied to, as with the function:
+
+for (i in 1:10){
+  print(i - 1)
+}
+
+The results will be printed to the console unless it is specified within the loop that it should be saved to a dataframe, and the null dataframe is created before the loop is implemented. 
+
+## Question 3
+Reading data into R:
+
+```{r}
+cities <- read.csv("Cities.csv")
+```
+
+## Question 4
+Creating function to calculate distances using Haversine formula:
+
+```{r}
+dist_calc <- function(lat1, long1, lat2, log2){
+rad.lat1 <- lat1 * pi/180
+rad.lon1 <- long1 * pi/180
+rad.lat2 <- lat2 * pi/180
+rad.lon2 <- log2 * pi/180
+# Haversine formula
+delta_lat <- rad.lat2 - rad.lat1
+delta_lon <- rad.lon2 - rad.lon1
+a <- sin(delta_lat / 2)^2 + cos(rad.lat1) * cos(rad.lat2) * sin(delta_lon / 2)^2
+c <- 2 * asin(sqrt(a))
+# Earth's radius in kilometers
+earth_radius <- 6378137
+# Calculate the distance
+distance_km <- (earth_radius * c)/1000
+return(distance_km)
+}
+```
+
+
+## Question 5
+Computing difference in distance between New York City and Auburn using the function created:
+
+```{r}
+cities_subset <- subset(cities, city %in% c("New York", "Auburn"), select = c(long, lat)) # subsetting data to get the two cities we are interested in
+print(cities_subset) # returning values to see to input into function
+nyc_auburn <- dist_calc(40.6943, -73.9249, 32.6087, -85.4903) # using subset data in function
+print(nyc_auburn)
+```
+
+## Question 6
+Using function in a loop to calculate the distance between Auburn and all the other cities:
+
+```{r}
+dist_all <- NULL
+for (i in 1:nrow(cities)){
+  distance_i <- dist_calc(cities$lat[i], cities$long[i], 32.6087, -85.4903) # applying function to every city
+  dist_all <- rbind.data.frame(dist_all, distance_i) # making matrix
+}
+
+print(dist_all) # printing
+```
+
