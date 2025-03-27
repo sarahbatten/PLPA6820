@@ -138,3 +138,6 @@ print(dist_all) # printing
     ## 38          851.3423
     ## 39         1382.3721
     ## 40            0.0000
+
+Link to GitHub: [Coding Challenge 6
+Directory](https://github.com/sarahbatten/PLPA6820/tree/main)
